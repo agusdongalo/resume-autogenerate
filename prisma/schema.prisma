@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Resume {
+  id                  String   @id @default(cuid())
+  fullName            String
+  email               String
+  phone               String?
+  location            String?
+  linkedin            String?
+  website             String?
+  targetJobTitle      String
+  background          String?  @db.LongText
+  jobDescription      String?  @db.LongText
+  sourceData          Json
+  generatedResume     Json
+  generatedResumeText  String   @db.LongText
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([targetJobTitle])
+  @@index([createdAt])
+}
